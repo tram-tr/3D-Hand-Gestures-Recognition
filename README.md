@@ -21,7 +21,14 @@ The challenge is predicting the depth of each hand joint from 2D video frames. W
 
 ### Dataset
 
-The **[InterHand2.6M](https://mks0601.github.io/InterHand2.6M/)** dataset will be used to develop and evaluate the model. Introduced at **ECCV 2020**, this dataset is specifically designed for **3D interacting hand pose estimation** from a single RGB image. With over 2.6 million frames, it contains accurate 3D annotations for both single and interacting hand poses, making it the ideal choice for this project. The dataset’s variety of hand configurations and lighting conditions ensures that the model can generalize well to different scenarios.
+   The **[InterHand2.6M](https://mks0601.github.io/InterHand2.6M/)** dataset will be used to develop and evaluate the model. Introduced at **ECCV 2020**, this dataset is specifically designed for **3D interacting hand pose estimation** from a single RGB image. The dataset contains over 2.6 million frames with accurate 3D annotations for both single and interacting hand poses.
+
+1. **Training (70%)**
+   
+2. **Validation (15%)**
+
+3. **Testing (15%)**
+   
 
 ### Challenges and Learning Goals
 
