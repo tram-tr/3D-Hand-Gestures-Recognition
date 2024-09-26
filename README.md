@@ -53,3 +53,9 @@ The key features required for this project are the 3D coordinates of important h
 - **Fingertips**
 - **Wrist**
 
+
+09/26/24 Update:
+Relevant paper:
+https://arxiv.org/pdf/2005.04551v1 (using the same dataset)
+
+
