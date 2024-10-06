@@ -26,5 +26,58 @@ The project will use the 21 keypoints detected by MediaPipe, including:
 - **Fingertips**
 - **Wrist**
 
+## Part 2: Dataset
 
+The dataset used for this project is a portion of the **InterHand2.6M** dataset. The dataset is designed for **3D interacting hand pose estimation** from single RGB images.
+
+The dataset originates from the paper **"InterHand2.6M: A Dataset and Baseline for 3D Interacting Hand Pose Estimation from a Single RGB Image"** (Gyeongsik Moon, Shoou-I Yu, He Wen, Takaaki Shiratori, Kyoung Mu Lee, ECCV 2020), which can be accessed [here](https://arxiv.org/abs/2008.09309).
+
+### Source Information:
+- **Dataset name**: InterHand2.6M (Parts `aa`, `ab`, `ac` only)
+- **Download link**: [InterHand2.6M Download](https://fb-baas-f32eacb9-8abb-11eb-b2b8-4857dd089e15.s3.amazonaws.com/InterHand2.6M/InterHand2.6M.images.5.fps.v1.0/index.html)
+- **Associated paper**: [InterHand2.6M paper](https://arxiv.org/abs/2008.09309)
+
+### Dataset Description:
+The InterHand2.6M dataset contains a total of 2.6 million frames, but for the scope of this project, I am using only parts `aa`, `ab`, and `ac`. This subset includes RGB images captured at **5 frames per second** (fps) and annotated with accurate **3D hand joint positions**. These hand poses consist of both **single and interacting hand poses**, which will help in building a robust hand gesture recognition model.
+
+- **Subjects and Samples**: The dataset contains a wide range of hand poses from multiple subjects, with varying hand sizes and shapes, which will contribute to a more generalizable model.
+- **Frames per Subject**: Since I am using a subset of the full dataset, the exact number of samples per subject varies, but each part (`aa`, `ab`, `ac`) includes thousands of frames with labeled hand joints.
+- **Resolution**: The RGB images are captured at a high resolution, which allows for detailed extraction of keypoints and hand features.
+
+#### Folder Breakdown:
+Here are the folders used in this project and the number of images in each:
+
+- **ROM01_No_Interaction_2_Hand**: 24,643 images
+   - Contains two hands with no interaction between them.
+  
+- **ROM02_Interaction_2_Hand**: 24,740 images
+   - Contains interacting hands, which introduces complexities such as occlusion and complex hand postures.
+
+- **ROM03_LT_No_Occlusion**: 55,472 images
+   - Left hand (LT) with no occlusions.
+
+- **ROM04_LT_Occlusion**: 20,989 images
+   - Left hand (LT) with occlusion.
+
+- **ROM04_RT_Occlusion**: 20,294 images
+   - Right hand (RT) with occlusion. 
+
+- **ROM05_RT_Wrist_ROM**: 13,058 images
+   - Captures the range of motion (ROM) of the right wrist.
+
+- **ROM07_Rt_Finger_Occlusions**: 24,464 images
+   - Right-hand finger occlusions.
+
+- **ROM08_Lt_Finger_Occlusions**: 26,549 images
+   - Left-hand finger occlusions.
+
+- **ROM09_Interaction_Fingers_Touching**: 25,998 images
+   - Contains images where fingers are interacting or touching.
+
+### Splitting the Dataset:
+To ensure the model can generalize effectively, the dataset is split into three subsets: **Training (60%)**, **Validation (20%)**, and **Testing (20%)**. 
+
+- **Training (60%)**: This subset will be used to train the gesture recognition model. The training data includes a wide variety of hand poses, angles, and backgrounds to ensure that the model can generalize well.
+- **Validation (20%)**: This subset will be used to fine-tune the model, checking for overfitting and helping adjust hyperparameters. 
+- **Testing (20%)**: The testing subset is used for the final evaluation, where it will be used to assess the model’s performance on unseen data.
 
