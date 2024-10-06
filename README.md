@@ -47,31 +47,49 @@ The InterHand2.6M dataset contains a total of 2.6 million frames, but for the sc
 #### Folder Breakdown:
 Here are the folders used in this project and the number of images in each:
 
-- **ROM01_No_Interaction_2_Hand**: 24,643 images
+- **ROM01_No_Interaction_2_Hand**: 24,742 images
+   - Number of subjects: 139
+   - Images per subject: 178
    - Contains two hands with no interaction between them.
   
-- **ROM02_Interaction_2_Hand**: 24,740 images
+- **ROM02_Interaction_2_Hand**: 24,742 images
+   - Number of subjects: 139
+   - Images per subject: 178
    - Contains interacting hands, which introduces complexities such as occlusion and complex hand postures.
 
-- **ROM03_LT_No_Occlusion**: 55,472 images
+- **ROM03_LT_No_Occlusion**: 55,600 images
+   - Number of subjects: 139
+   - Images per subject: 400
    - Left hand (LT) with no occlusions.
 
 - **ROM04_LT_Occlusion**: 20,989 images
+   - Number of subjects: 139
+   - Images per subject: 151
    - Left hand (LT) with occlusion.
 
 - **ROM04_RT_Occlusion**: 20,294 images
+   - Number of subjects: 139
+   - Images per subject: 146
    - Right hand (RT) with occlusion. 
 
-- **ROM05_RT_Wrist_ROM**: 13,058 images
+- **ROM05_RT_Wrist_ROM**: 13,066 images
+   - Number of subjects: 139
+   - Images per subject: 94
    - Captures the range of motion (ROM) of the right wrist.
 
 - **ROM07_Rt_Finger_Occlusions**: 24,464 images
+   - Number of subjects: 139
+   - Images per subject: 176
    - Right-hand finger occlusions.
 
 - **ROM08_Lt_Finger_Occlusions**: 26,549 images
+   - Number of subjects: 139
+   - Images per subject: 191
    - Left-hand finger occlusions.
 
-- **ROM09_Interaction_Fingers_Touching**: 25,998 images
+- **ROM09_Interaction_Fingers_Touching**: 26,376 images
+   - Number of subjects: 42
+   - Images per subject: 628
    - Contains images where fingers are interacting or touching.
 
 ### Splitting the Dataset:
