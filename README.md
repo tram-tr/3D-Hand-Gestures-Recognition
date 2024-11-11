@@ -145,6 +145,96 @@ I then split the subset of the dataset as training set (60%), validation set (20
    ![Angles Between Vectors for Left Hand](sample_feature/image29679_left_angles.png)
    ![Angles Between Vectors for Right Hand](sample_feature/image29679_right_angles.png)
 
+### Repo Stucture
+
+```
+annotations/
+│
+├── test/
+│   ├── InterHand2.6M_camera.json
+│   ├── InterHand2.6M_data.json
+│   ├── InterHand2.6M_joint_3d.json
+│   └── InterHand2.6M_MANO_NeuralAnnot.json
+│
+├── train/
+│   ├── InterHand2.6M_camera.json
+│   ├── InterHand2.6M_data.json
+│   ├── InterHand2.6M_joint_3d.json
+│   └── InterHand2.6M_MANO_NeuralAnnot.json
+│
+└── val/
+    ├── InterHand2.6M_camera.json
+    ├── InterHand2.6M_data.json
+    ├── InterHand2.6M_joint_3d.json
+    └── InterHand2.6M_MANO_NeuralAnnot.json
+
+
+data/
+│
+├── test/
+│   ├── ROM01_No_Interaction_2_Hand/
+│   ├── ROM02_Interaction_2_Hand/
+│   ├── ROM03_LT_No_Occlusion/
+│   ├── ROM04_LT_Occlusion/
+│   ├── ROM04_RT_Occlusion/
+│   ├── ROM05_RT_Wrist_ROM/
+│   ├── ROM07_Rt_Finger_Occlusions/
+│   ├── ROM08_Lt_Finger_Occlusions/
+│   └── ROM09_Interaction_Fingers_Touching/
+│
+├── train/
+│   ├── ROM01_No_Interaction_2_Hand/
+│   ├── ROM02_Interaction_2_Hand/
+│   ├── ROM03_LT_No_Occlusion/
+│   ├── ROM04_LT_Occlusion/
+│   ├── ROM04_RT_Occlusion/
+│   ├── ROM05_RT_Wrist_ROM/
+│   ├── ROM07_Rt_Finger_Occlusions/
+│   ├── ROM08_Lt_Finger_Occlusions/
+│   └── ROM09_Interaction_Fingers_Touching/
+│
+└── val/
+    ├── ROM01_No_Interaction_2_Hand/
+    ├── ROM02_Interaction_2_Hand/
+    ├── ROM03_LT_No_Occlusion/
+    ├── ROM04_LT_Occlusion/
+    ├── ROM04_RT_Occlusion/
+    ├── ROM05_RT_Wrist_ROM/
+    ├── ROM07_Rt_Finger_Occlusions/
+    ├── ROM08_Lt_Finger_Occlusions/
+    └── ROM09_Interaction_Fingers_Touching/
+
+sample/
+│
+├── ROM01_No_Interaction_2_Hand/
+├── ROM02_Interaction_2_Hand/
+├── ROM03_LT_No_Occlusion/
+├── ROM04_LT_Occlusion/
+├── ROM04_RT_Occlusion/
+├── ROM05_RT_Wrist_ROM/
+├── ROM07_Rt_Finger_Occlusions/
+├── ROM08_Lt_Finger_Occlusions/
+└── ROM09_Interaction_Fingers_Touching/
+
+sample_feature/
+sample_keypoint/
+
+src/
+│
+├── feature_extraction.py
+├── feature_extraction.sh
+├── filter_annotations.py
+├── hand_keypoint_visualizer.py
+├── keypoint_detection.py
+├── keypoint_detection.sh
+└── split_data.py
+
+.gitignore
+README.md
+requirements.txt
+
+```
+
 ### Instructions to Run the Code
 
 Make sure you have installed the required dependencies. You can do this by using a `requirements.txt` file or by manually installing:
@@ -155,7 +245,9 @@ Make sure you have installed the required dependencies. You can do this by using
 
 The script takes an input image, detects the keypoints of hands present in the image, and saves both the keypoints and the image with keypoints annotated. For example,
 
-`python src/keypoint_detection.py --input sample/ROM09_Interaction_Fingers_Touching/image29679.jpg --output sample_keypoint/image29679`
+```
+python src/keypoint_detection.py --input sample/ROM09_Interaction_Fingers_Touching/image29679.jpg --output sample_keypoint/image29679
+```
 
 This will process the input image and save keypoints to the `json` file as well as the image with annotated keypoints.
 
@@ -175,13 +267,17 @@ There are other sample images in the `sample` folder.
 
 This script captures video from your webcam, detects hand keypoints in real-time using MediaPipe Hands, and visualizes the keypoints on the video stream using OpenCV. The visualized keypoints are connected to highlight the structure of the hand.
 
-`python src/hand_keypoint_visualizer.py`
+```
+python src/hand_keypoint_visualizer.py
+```
 
 - **Feature Extraction:**
 
 This script extracts features from 3D hand keypoints data, such as pairwise Euclidean distances between keypoints and angles between keypoint vectors. It also visualizes the extracted features and saves them as plots. For example,
 
-`python src/feature_extraction.py --input sample_keypoint/image29679.json --output sample_feature/image29679`
+```
+python src/feature_extraction.py --input sample_keypoint/image29679.json --output sample_feature/image29679
+```
 
 This process the `json` output from `keypoint_detection.py` as the input, extracting features and save them to the `json` file. It also plots the extracted features and save them as `png` images.
 
