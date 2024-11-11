@@ -160,10 +160,13 @@ The script takes an input image, detects the keypoints of hands present in the i
 This will process the input image and save keypoints to the `json` file as well as the image with annotated keypoints.
 
 Format of the `json` file:
-`{
-  "left": [[x1, y1, z1], [x2, y2, z2], ...],
-  "right": [[x1, y1, z1], [x2, y2, z2], ...]
-}`
+
+```
+{
+  "left": [list of keypoints],
+  "right": [list of keypoints]
+}
+```
 
 
 There are other sample images in the `sample` folder.
@@ -183,7 +186,9 @@ This script extracts features from 3D hand keypoints data, such as pairwise Eucl
 This process the `json` output from `keypoint_detection.py` as the input, extracting features and save them to the `json` file. It also plots the extracted features and save them as `png` images.
 
 Format of the `json` file:
-`{
+
+```
+{
   "left": {
     "distances": [<list_of_distances>],
     "angles": [<list_of_angles>]
@@ -192,6 +197,7 @@ Format of the `json` file:
     "distances": [<list_of_distances>],
     "angles": [<list_of_angles>]
   }
-}`
+}
+```
 
 
