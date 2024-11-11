@@ -116,8 +116,7 @@ I then split the subset of the dataset as training set (60%), validation set (20
    - MediaPipe's pre-trained model offers high accuracy real-time detection capabilities, so I aslo implemented real-time keypoint detection using MediaPipe.
    - Here is an illustration of the keypoint detection results:
 
-   ![Original Image](sample/ROM09_Interaction_Fingers_Touching/image29679.jpg)
-   ![Keypoint Detection](sample_keypoint/image29679.jpg)
+   ![Original Image](sample/ROM09_Interaction_Fingers_Touching/image29679.jpg) ![Keypoint Detection](sample_keypoint/image29679.jpg)
 
 2. **Keypoint Normalization**
    - Scaling: The detected keypoints were scaled based on the image dimensions (314 x 512).
