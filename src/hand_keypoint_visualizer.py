@@ -19,7 +19,7 @@ class HandKeypointVisualizer:
             if not ret:
                 break
             
-            frame = cv2.resize(frame, (512, 314))
+            frame = cv2.resize(frame, (314, 512))
             
             # convert the image to RGB for MediaPipe
             frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
