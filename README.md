@@ -142,15 +142,14 @@ I then split the subset of the dataset as training set (60%), validation set (20
 
    Here is an example plot for the angles between vectors:
 
-   ![Angles Between Vectors for Left Hand](sample_feature/image29679_left_distances.png)
-   ![Angles Between Vectors for Right Hand](sample_feature/image29679_right_distances.png)
+   ![Angles Between Vectors for Left Hand](sample_feature/image29679_left_angles.png)
+   ![Angles Between Vectors for Right Hand](sample_feature/image29679_right_angles.png)
 
 ### Instructions to Run the Code
 
 Make sure you have installed the required dependencies. You can do this by using a `requirements.txt` file or by manually installing:
 
-```bash
-pip install opencv-python mediapipe json argparse
+`pip install opencv-python mediapipe json argparse`
 
 - **Keypoint Detection:**
 
