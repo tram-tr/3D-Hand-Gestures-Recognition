@@ -1,6 +1,6 @@
 # Project Name: 3D Hand Pose Recognition Using MediaPipe Keypoints
 
-## Part 1: High-Level Solution (Revised)
+## Part 1: High-Level Solution (Revised) [09/18/24]
 
 The goal of this project is to create a 3D hand pose recognition system using keypoints detected by MediaPipe. By utilizing MediaPipe's real-time hand-tracking capabilities, the focus will be shifted from developing a full 3D pose estimation model to building a classifier that works on top of pre-detected keypoints to recognize poses. 
 
@@ -26,7 +26,7 @@ The project will use the 21 keypoints detected by MediaPipe, including:
 - **Fingertips**
 - **Wrist**
 
-## Part 2: Dataset
+## Part 2: Dataset [10/06/24]
 
 The dataset used for this project is a portion of the **InterHand2.6M** dataset. The dataset is designed for **3D interacting hand pose estimation** from single RGB images.
 
@@ -67,15 +67,15 @@ Here are the folders used in this project and the number of images in each:
    - Images per subject: 151
    - Left hand (LT) with occlusion.
 
-- **ROM04_RT_Occlusion**: 20,294 images
-   - Number of subjects: 139
-   - Images per subject: 146
-   - Right hand (RT) with occlusion. 
-
 - **ROM05_RT_Wrist_ROM**: 13,066 images
    - Number of subjects: 139
    - Images per subject: 94
    - Captures the range of motion (ROM) of the right wrist.
+
+- **ROM06_RT_Occlusion**: 20,294 images
+   - Number of subjects: 139
+   - Images per subject: 146
+   - Right hand (RT) with occlusion. 
 
 - **ROM07_Rt_Finger_Occlusions**: 24,464 images
    - Number of subjects: 139
@@ -99,7 +99,7 @@ To ensure the model can generalize effectively, the dataset is split into three 
 - **Validation (20%)**: This subset will be used to fine-tune the model, checking for overfitting and helping adjust hyperparameters. 
 - **Testing (20%)**: The testing subset is used for the final evaluation, where it will be used to assess the model’s performance on unseen data.
 
-## Part 3: Data Pre-processing and Feature Extraction
+## Part 3: Data Pre-processing and Feature Extraction [11/10/24]
 
 ### Data Subsetting and Preparation
 Given the substantial size of the InterHand2.6M dataset, I downloaded and extracted only specified parts of the dataset (aa, ab, and ac), focusing on images captured at 5 frames per second (fps). This subset contains diverse hand poses, including single and interacting poses.
@@ -230,8 +230,6 @@ requirements.txt
 
 ```
 
-annotations: https://drive.google.com/drive/folders/1ithS4YY1HVpQ1FCo7eU-VBgd8OWL9Ury?usp=sharing
-
 ### Instructions to Run the Code
 
 Make sure you have installed the required dependencies. You can do this by using a `requirements.txt` file or by manually installing:
@@ -284,13 +282,78 @@ Format of the `json` file:
 {
   "left": {
     "distances": [<list_of_distances>],
-    "angles": [<list_of_angles>]
+    "angles": [<list_of_angles>],
+    "mass_center_distances": [<list_of_mass_center_distances>]
   },
   "right": {
     "distances": [<list_of_distances>],
-    "angles": [<list_of_angles>]
+    "angles": [<list_of_angles>],
+    "mass_center_distances": [<list_of_mass_center_distances>]
   }
 }
 ```
 
+## Part 4: Classification [12/04/24]
+
+### Processed Anotations
+
+Annotations: [Download](https://drive.google.com/drive/folders/1ithS4YY1HVpQ1FCo7eU-VBgd8OWL9Ury?usp=sharing)
+
+```
+annotations/
+│
+├── test/
+│   ├── features.json
+│   ├── keypoints.json
+│   └── labels.json
+│  
+├── train/
+│   ├── features.json
+│   ├── keypoints.json
+│   └── labels.json
+│
+└── val/
+    ├── features.json
+    ├── keypoints.json
+    └── labels.json
+```
+
+Format of `features.json`:
+
+```
+{
+   "<cameraid_imageid>": {
+      "left": {
+          "distances": [<list_of_distances>],
+          "angles": [<list_of_angles>],
+          "mass_center_distances": [<list_of_mass_center_distances>]
+        },
+     "right": {
+          "distances": [<list_of_distances>],
+          "angles": [<list_of_angles>],
+          "mass_center_distances": [<list_of_mass_center_distances>]
+        }
+   }
+}
+```
+
+Format of `labels.json`:
+
+```
+{
+   "<cameraid_imageid>": [<label_id>, <label>]
+}
+```
+
+| Label ID (ROM ID) | Label |
+| -------- | ------- |
+| ROM01 | No interaction between 2 hands |
+| ROM02 | Interaction between 2 Hands |
+| ROM03 | Left hand (LT) with no occlusions |
+| ROM04 | Left hand (LT) with occlusion |
+| ROM05 | Right wrist |
+| ROM06 | Right hand (RT) with occlusion |
+| ROM07 | Right-hand finger occlusions |
+| ROM08 | Left-hand finger occlusions |
+| ROM09 | Interaction fingers touching |
 
