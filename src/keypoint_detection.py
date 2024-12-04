@@ -1,7 +1,8 @@
+import os
 import cv2
 import mediapipe as mp
 import json
-import argparse
+from tqdm import tqdm
 
 mp_hands = mp.solutions.hands
 mp_drawing = mp.solutions.drawing_utils
@@ -26,32 +27,36 @@ def detect_keypoints(image_path, max_num_hands=2):
             # determine if the hand is left or right and store accordingly
             hand_label = handedness.classification[0].label.lower()  # "left" or "right"
             keypoints_dict[hand_label] = keypoints
-            
-            # draw landmarks on the image for each detected hand
-            mp_drawing.draw_landmarks(image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
     
     hands.close()
-    return keypoints_dict, image
+    return keypoints_dict
 
-def save_keypoints_and_show(image_path, output_path):
-    keypoints_dict, image_with_keypoints = detect_keypoints(image_path)
-    
-    json_output_path = output_path if output_path.endswith('.json') else output_path + '.json'
-    with open(json_output_path, 'w') as f:
-        json.dump(keypoints_dict, f)
-    print(f"Keypoints saved to {json_output_path}")
+def extract_keypoints_from_dataset(data_dir, output_file):
+    keypoints_data = {}
 
-    image_output_path = output_path if output_path.endswith('.jpg') else output_path + '.jpg'
-    cv2.imwrite(image_output_path, image_with_keypoints)
+    for image_file in tqdm(os.listdir(data_dir)):
+        if image_file.endswith(".jpg"):
+            image_id = os.path.splitext(image_file)[0]  
+            input_path = os.path.join(data_dir, image_file)
+            
+            # detect keypoints
+            keypoints_dict = detect_keypoints(input_path)
+            keypoints_data[image_id] = keypoints_dict
     
-    cv2.imshow("Detected Keypoints", image_with_keypoints)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+
+    with open(output_file, 'w') as f:
+        json.dump(keypoints_data, f, indent=4)
+    print(f"keypoints saved to {output_file}")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--input', type=str, required=True, help='path to input image')
-    parser.add_argument('--output', type=str, required=True, help='path to save keypoints')
-    args = parser.parse_args()
+    splits = ['train', 'val', 'test']
+    base_dir = 'processed_data'  
+    output_dir = 'annotations' 
 
-    save_keypoints_and_show(args.input, args.output)
+    os.makedirs(output_dir, exist_ok=True)
+
+    for split in splits:
+        data_dir = os.path.join(base_dir, split)
+        output_file = os.path.join(output_dir, f"{split}/keypoints.json")
+        print(f"processing {split} data...")
+        extract_keypoints_from_dataset(data_dir, output_file)
