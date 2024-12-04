@@ -19,38 +19,43 @@ def load_data(features_file, labels_file):
     X, y = [], []
     max_features_length = 0
 
-    for key, features in tqdm(features_data.items(), desc=f"processing {features_file}"):
+    for features in tqdm(features_data.values(), desc=f"processing {features_file}"):
         left_features = features.get('left', {})
         right_features = features.get('right', {})
-        
-        combined_features = []
-        for hand_features in [left_features, right_features]:
-            combined_features += hand_features.get('distances', [])
-            combined_features += hand_features.get('angles', [])
-            combined_features += hand_features.get('mass_center_distances', [])
-        
+        combined_features = (
+            left_features.get('distances', []) +
+            left_features.get('angles', []) +
+            left_features.get('mass_center_distances', []) +
+            right_features.get('distances', []) +
+            right_features.get('angles', []) +
+            right_features.get('mass_center_distances', [])
+        )
         max_features_length = max(max_features_length, len(combined_features))
 
     for key, features in tqdm(features_data.items(), desc=f"processing {features_file}"):
         if key in labels_data:
-            label = labels_data[key][0]  # using the first part of the label
+            label = labels_data[key][0]
             left_features = features.get('left', {})
             right_features = features.get('right', {})
-
-            combined_features = []
-            for hand_features in [left_features, right_features]:
-                combined_features += hand_features.get('distances', [])
-                combined_features += hand_features.get('angles', [])
-                combined_features += hand_features.get('mass_center_distances', [])
-            
-            # pad combined_features to max_features_length with zeros
+            combined_features = (
+                left_features.get('distances', []) +
+                left_features.get('angles', []) +
+                left_features.get('mass_center_distances', []) +
+                right_features.get('distances', []) +
+                right_features.get('angles', []) +
+                right_features.get('mass_center_distances', [])
+            )
+            # Pad to max_features_length
             padded_features = combined_features + [0] * (max_features_length - len(combined_features))
-            
             X.append(padded_features)
             y.append(label)
 
-    return np.array(X), np.array(y)
-
+    # Convert to numpy array and validate
+    X = np.array(X)
+    y = np.array(y)
+    if np.isnan(X).any() or np.isinf(X).any():
+        raise ValueError("NaN or infinite values detected in input features")
+    return X, y
 
 def train(X_train, y_train, X_val, y_val):
     label_encoder = LabelEncoder()
@@ -59,7 +64,7 @@ def train(X_train, y_train, X_val, y_val):
 
     pipeline = Pipeline([
         ('scaler', StandardScaler()),
-        ('clf', XGBClassifier(use_label_encoder=False, eval_metric='mse', random_state=42))
+        ('clf', XGBClassifier(eval_metric='mlogloss', random_state=42))
     ])
 
     param_grid = {
@@ -89,7 +94,8 @@ def train(X_train, y_train, X_val, y_val):
 
     model_name = 'best_xgboost.pkl'
     model_dir = 'models'
-    save_path = os.join(model_dir, model_name)
+    os.makedirs(model_dir, exist_ok=True)
+    save_path = os.path.join(model_dir, model_name)
     with open(save_path, "wb") as f:
         pickle.dump((best_model, label_encoder), f)
     print(f"model saved to {save_path}")
@@ -122,6 +128,3 @@ if __name__ == '__main__':
     clf, label_encoder = train(X_train, y_train, X_val, y_val)
 
     y_test_pred = evaluate_model(clf, X_test, y_test, label_encoder)
-
-
-    

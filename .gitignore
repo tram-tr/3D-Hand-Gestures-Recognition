@@ -2,3 +2,6 @@ raw_data/
 raw_annotations/
 data/
 *.tar.*
+annotations/
+annotations.zip
+__MACOSX/
