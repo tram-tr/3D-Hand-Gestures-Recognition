@@ -1,22 +1,22 @@
-# Project Name: 3D Hand Gesture Recognition Using MediaPipe Keypoints
+# Project Name: 3D Hand Pose Recognition Using MediaPipe Keypoints
 
 ## Part 1: High-Level Solution (Revised)
 
-The goal of this project is to create a 3D hand gesture recognition system using keypoints detected by MediaPipe. By utilizing MediaPipe's real-time hand-tracking capabilities, the focus will be shifted from developing a full 3D pose estimation model to building a classifier that works on top of pre-detected keypoints to recognize gestures. 
+The goal of this project is to create a 3D hand pose recognition system using keypoints detected by MediaPipe. By utilizing MediaPipe's real-time hand-tracking capabilities, the focus will be shifted from developing a full 3D pose estimation model to building a classifier that works on top of pre-detected keypoints to recognize poses. 
 
 ### Key Objectives (Revised):
 1. **Keypoint Detection (MediaPipe):** Instead of building a custom 3D hand pose estimator from scratch, the system will use MediaPipe, which can detect 21 keypoints of the hand in real time from RGB input. This step will serve as the foundation for the project, handling the initial hand segmentation and keypoint extraction.
 
 2. **Feature Extraction:** After obtaining the keypoints from MediaPipe, the next step is to extract features from these keypoints. These features will represent important hand joints such as the knuckles, fingertips, and wrist.
 
-3. **Gesture Classification:** The primary focus will be on building a machine learning classifier to recognize hand gestures based on the extracted keypoints. The model can be trained to identify predefined gestures such as thumbs-up, OK sign, or other hand poses commonly used in human-computer interaction.
+3. **Poses Classification:** The primary focus will be on building a machine learning classifier to recognize hand poses based on the extracted keypoints. The model can be trained to identify predefined poses such as thumbs-up, OK sign, or other hand poses commonly used in human-computer interaction.
 
-4. **Real-time Performance:** Since MediaPipe provides real-time hand tracking, the system should be able to process video streams at 15–30 frames per second (FPS). The classifier for gesture recognition will need to be optimized for speed to ensure real-time performance.
+4. **Real-time Performance:** Since MediaPipe provides real-time hand tracking, the system should be able to process video streams at 15–30 frames per second (FPS). The classifier for pose recognition will need to be optimized for speed to ensure real-time performance.
 
 ### Challenges and Learning Goals
 
 1. **MediaPipe Keypoints as Features**:
-   Instead of extracting raw 3D positions, this project will focus on utilizing the 2D keypoints detected by MediaPipe. The challenge will be to design features or feature transformations that can improve the gesture classification accuracy.
+   Instead of extracting raw 3D positions, this project will focus on utilizing the 2D keypoints detected by MediaPipe. The challenge will be to design features or feature transformations that can improve the pose classification accuracy.
    
 
 ### Image Properties and Features
@@ -95,14 +95,14 @@ Here are the folders used in this project and the number of images in each:
 ### Splitting the Dataset:
 To ensure the model can generalize effectively, the dataset is split into three subsets: **Training (60%)**, **Validation (20%)**, and **Testing (20%)**. 
 
-- **Training (60%)**: This subset will be used to train the gesture recognition model. The training data includes a wide variety of hand poses, angles, and backgrounds to ensure that the model can generalize well.
+- **Training (60%)**: This subset will be used to train the pose recognition model. The training data includes a wide variety of hand poses, angles, and backgrounds to ensure that the model can generalize well.
 - **Validation (20%)**: This subset will be used to fine-tune the model, checking for overfitting and helping adjust hyperparameters. 
 - **Testing (20%)**: The testing subset is used for the final evaluation, where it will be used to assess the model’s performance on unseen data.
 
 ## Part 3: Data Pre-processing and Feature Extraction
 
 ### Data Subsetting and Preparation
-Given the substantial size of the InterHand2.6M dataset, I downloaded and extracted only specified parts of the dataset (aa, ab, and ac), focusing on images captured at 5 frames per second (fps). This subset contains diverse hand poses, including single and interacting gestures.
+Given the substantial size of the InterHand2.6M dataset, I downloaded and extracted only specified parts of the dataset (aa, ab, and ac), focusing on images captured at 5 frames per second (fps). This subset contains diverse hand poses, including single and interacting poses.
 
 To complement the subset of images, I also extracted the relevant annotations from the provided metadata files though I am still figuring out how I will use these annotations.
 
@@ -128,7 +128,7 @@ I then split the subset of the dataset as training set (60%), validation set (20
    - **Angles Between Keypoint Vectors:** I also calculated angles between consecutive keypoint vectores to provide additional geometric information.
 
 ### Reasons for Using These Algorithms/Models
-- **MediaPipe Hands**: I decided to use MediaPipe Hands because of its efficiency and high accuracy in detecting hand keypoints. The model is well-optimized for real-time applications and can handle complex hand poses, which is essential for gesture recognition.
+- **MediaPipe Hands**: I decided to use MediaPipe Hands because of its efficiency and high accuracy in detecting hand keypoints. The model is well-optimized for real-time applications and can handle complex hand poses, which is essential for pose recognition.
 - **Keypoint Normalization**: Scaling, centering, and distance normalization were used to make the features invariant to the hand’s position, orientation, and size in the image. These transformations help in creating a standardized representation of the hand.
 - **Pairwise Euclidean Distances**: I think pairwise Euclidean distances are a good way to represent the overall shape and structure of the hand. Since gestures are defined by how the fingers and joints are positioned relative to each other, using these distances helps the model pick up on the subtle differences between various hand poses.
 
@@ -137,7 +137,7 @@ I then split the subset of the dataset as training set (60%), validation set (20
    ![Pairwise Distances for Left Hand](sample_feature/image29679_left_distances.png)
    ![Pairwise Distances for Right Hand](sample_feature/image29679_right_distances.png)
 
-- **Angles Between Keypoint Vectors**: I think calculating angles between keypoint vectors adds another layer of useful information. This feature captures the curvature and orientation of the hand, making it particularly helpful for distinguishing between gestures that might look similar in shape but differ in the way they’re oriented.
+- **Angles Between Keypoint Vectors**: I think calculating angles between keypoint vectors adds another layer of useful information. This feature captures the curvature and orientation of the hand, making it particularly helpful for distinguishing between poses that might look similar in shape but differ in the way they’re oriented.
 
    Here is an example plot for the angles between vectors:
 
