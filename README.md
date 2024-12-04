@@ -150,23 +150,19 @@ I then split the subset of the dataset as training set (60%), validation set (20
 annotations/
 │
 ├── test/
-│   ├── InterHand2.6M_camera.json
-│   ├── InterHand2.6M_data.json
-│   ├── InterHand2.6M_joint_3d.json
-│   └── InterHand2.6M_MANO_NeuralAnnot.json
-│
+│   ├── features.json
+│   ├── keypoints.json
+│   └── labels.json
+│  
 ├── train/
-│   ├── InterHand2.6M_camera.json
-│   ├── InterHand2.6M_data.json
-│   ├── InterHand2.6M_joint_3d.json
-│   └── InterHand2.6M_MANO_NeuralAnnot.json
+│   ├── features.json
+│   ├── keypoints.json
+│   └── labels.json
 │
 └── val/
-    ├── InterHand2.6M_camera.json
-    ├── InterHand2.6M_data.json
-    ├── InterHand2.6M_joint_3d.json
-    └── InterHand2.6M_MANO_NeuralAnnot.json
-
+    ├── features.json
+    ├── keypoints.json
+    └── labels.json
 
 data/
 │
@@ -233,6 +229,8 @@ README.md
 requirements.txt
 
 ```
+
+annotations: https://drive.google.com/drive/folders/1ithS4YY1HVpQ1FCo7eU-VBgd8OWL9Ury?usp=sharing
 
 ### Instructions to Run the Code
 
