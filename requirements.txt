@@ -6,4 +6,5 @@ mediapipe
 numpy
 scikit-learn
 xgboost
+lightgbm
 tqdm

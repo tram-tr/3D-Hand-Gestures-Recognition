@@ -3,6 +3,7 @@ import numpy as np
 from sklearn.svm import SVC
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.pipeline import Pipeline
+from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import classification_report
 from tqdm import tqdm
 import os
@@ -56,24 +57,40 @@ def train(X_train, y_train, X_val, y_val):
 
     pipeline = Pipeline([
         ('scaler', StandardScaler()),
-        ('svc', SVC(probability=True, random_state=42))
+        ('svm', SVC(kernel='rbf', probability=True))
     ])
 
-    print("training SVM model...")
-    pipeline.fit(X_train, y_train_enc)
+    param_grid = {
+        'svm__C': [0.1, 1, 10],
+        'svm__gamma': [0.01, 0.1, 1],
+    }
 
-    y_val_pred = pipeline.predict(X_val)
-    print("val:")
+    print('hyperparameter tuning...')
+    grid_search = GridSearchCV(
+        pipeline,
+        param_grid,
+        scoring='accuracy',
+        cv=5,
+        verbose=2,
+        n_jobs=-1
+    )
+
+    grid_search.fit(X_train, y_train_enc)
+    best_model = grid_search.best_estimator_
+    y_val_pred = best_model.predict(X_val)
+    print('val:')
     print(classification_report(y_val_enc, y_val_pred, target_names=label_encoder.classes_))
+    print(f"best hyperparameters: {grid_search.best_params_}")
 
-    model_dir = "models"
+    model_name = 'best_svm.pkl'
+    model_dir = 'models'
     os.makedirs(model_dir, exist_ok=True)
-    model_path = os.path.join(model_dir, "svm_model.pkl")
-    with open(model_path, "wb") as f:
-        pickle.dump((pipeline, label_encoder), f)
-    print(f"model saved to {model_path}")
+    save_path = os.path.join(model_dir, model_name)
+    with open(save_path, 'wb') as f:
+        pickle.dump((best_model, label_encoder), f)
+    print(f"model saved to {save_path}")
 
-    return pipeline, label_encoder
+    return best_model, label_encoder
 
 def evaluate_model(model, X_test, y_test, label_encoder):
     y_test_enc = label_encoder.transform(y_test)
@@ -90,7 +107,7 @@ if __name__ == '__main__':
     for split in splits:
         features_file = os.path.join(data_dir, f"{split}/features.json")
         labels_file = os.path.join(data_dir, f"{split}/labels.json")
-        print(f"Loading {split} dataset...")
+        print(f"loading {split} dataset...")
         X, y = load_data(features_file, labels_file)
         datasets[split] = (X, y)
 
