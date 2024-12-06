@@ -51,9 +51,9 @@ def load_data(features_file, labels_file):
 
     return np.array(X), np.array(y)
 
-class GestureNN(nn.Module):
+class PoseNN(nn.Module):
     def __init__(self, input_size, num_classes):
-        super(GestureNN, self).__init__()
+        super(PoseNN, self).__init__()
         self.fc1 = nn.Linear(input_size, 128)
         self.fc2 = nn.Linear(128, 64)
         self.fc3 = nn.Linear(64, num_classes)
@@ -95,9 +95,9 @@ def train_model(model, train_loader, val_loader, criterion, optimizer, device, n
 
         epoch_loss = running_loss / len(train_loader.dataset)
         epoch_acc = running_corrects.double() / len(train_loader.dataset)
-        print(f"Train Loss: {epoch_loss:.4f} Acc: {epoch_acc:.4f}")
+        print(f"train Loss: {epoch_loss:.4f} acc: {epoch_acc:.4f}")
         
-        # Validation phase
+        # validation phase
         model.eval()
         val_loss = 0.0
         val_corrects = 0
@@ -114,7 +114,7 @@ def train_model(model, train_loader, val_loader, criterion, optimizer, device, n
 
         val_loss /= len(val_loader.dataset)
         val_acc = val_corrects.double() / len(val_loader.dataset)
-        print(f"Val Loss: {val_loss:.4f} Acc: {val_acc:.4f}")
+        print(f"val loss: {val_loss:.4f} acc: {val_acc:.4f}")
 
         # save the best model
         if val_acc > best_acc:
@@ -156,7 +156,7 @@ if __name__ == '__main__':
     input_size = X_train.shape[1]
     num_classes = len(label_encoder.classes_)
 
-    model = GestureNN(input_size, num_classes)
+    model = PoseNN(input_size, num_classes)
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=0.001)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -166,18 +166,24 @@ if __name__ == '__main__':
 
     model_dir = "models"
     os.makedirs(model_dir, exist_ok=True)
-    model_path = os.path.join(model_dir, "best_neural_network.pth")
+    model_path = os.path.join(model_dir, "best_nn.pth")
     torch.save({"model_state_dict": model.state_dict(), "label_encoder": label_encoder}, model_path)
     print(f"model saved to {model_path}")
 
     model.eval()
-    test_corrects = 0
+    all_preds = []
+    all_labels = []
+
     with torch.no_grad():
         for inputs, labels in test_loader:
             inputs, labels = inputs.to(device), labels.to(device)
             outputs = model(inputs)
             _, preds = torch.max(outputs, 1)
-            test_corrects += torch.sum(preds == labels.data)
+            all_preds.extend(preds.cpu().numpy())
+            all_labels.extend(labels.cpu().numpy())
 
-    test_acc = test_corrects.double() / len(test_loader.dataset)
-    print(f"test accuracy: {test_acc:.4f}")
+    test_corrects = sum(np.array(all_preds) == np.array(all_labels))
+    test_acc = test_corrects / len(test_loader.dataset)
+    print(f"test acc: {test_acc:.4f}")
+    print("\ntest:")
+    print(classification_report(all_labels, all_preds, target_names=label_encoder.classes_))

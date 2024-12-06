@@ -1,0 +1,47 @@
+loading train dataset...
+processing annotations/train/features.json:   0%|          | 0/140859 [00:00<?, ?it/s]processing annotations/train/features.json:  19%|█▉        | 27144/140859 [00:00<00:00, 271415.02it/s]processing annotations/train/features.json:  40%|███▉      | 55644/140859 [00:00<00:00, 279391.15it/s]processing annotations/train/features.json:  60%|█████▉    | 84415/140859 [00:00<00:00, 283183.17it/s]processing annotations/train/features.json:  80%|████████  | 113289/140859 [00:00<00:00, 285368.10it/s]processing annotations/train/features.json: 100%|██████████| 140859/140859 [00:00<00:00, 283705.55it/s]
+processing annotations/train/features.json:   0%|          | 0/140859 [00:00<?, ?it/s]processing annotations/train/features.json:   8%|▊         | 10980/140859 [00:00<00:01, 109763.73it/s]processing annotations/train/features.json:  16%|█▌        | 21957/140859 [00:00<00:01, 105782.01it/s]processing annotations/train/features.json:  23%|██▎       | 32546/140859 [00:00<00:01, 94657.05it/s] processing annotations/train/features.json:  30%|███       | 42405/140859 [00:00<00:01, 95691.16it/s]processing annotations/train/features.json:  37%|███▋      | 52205/140859 [00:00<00:00, 96313.09it/s]processing annotations/train/features.json:  45%|████▍     | 62705/140859 [00:00<00:00, 98645.53it/s]processing annotations/train/features.json:  52%|█████▏    | 72611/140859 [00:00<00:00, 91547.72it/s]processing annotations/train/features.json:  59%|█████▊    | 82650/140859 [00:00<00:00, 94161.73it/s]processing annotations/train/features.json:  66%|██████▌   | 92658/140859 [00:00<00:00, 95918.82it/s]processing annotations/train/features.json:  73%|███████▎  | 103071/140859 [00:01<00:00, 98363.12it/s]processing annotations/train/features.json:  80%|████████  | 113105/140859 [00:01<00:00, 98663.19it/s]processing annotations/train/features.json:  87%|████████▋ | 123013/140859 [00:01<00:00, 92094.85it/s]processing annotations/train/features.json:  94%|█████████▍| 132705/140859 [00:01<00:00, 93272.07it/s]processing annotations/train/features.json: 100%|██████████| 140859/140859 [00:01<00:00, 95856.54it/s]
+loading val dataset...
+processing annotations/val/features.json:   0%|          | 0/45855 [00:00<?, ?it/s]processing annotations/val/features.json: 100%|██████████| 45855/45855 [00:00<00:00, 639183.95it/s]
+processing annotations/val/features.json:   0%|          | 0/45855 [00:00<?, ?it/s]processing annotations/val/features.json:  24%|██▎       | 10846/45855 [00:00<00:00, 108453.38it/s]processing annotations/val/features.json:  47%|████▋     | 21692/45855 [00:00<00:00, 106337.44it/s]processing annotations/val/features.json:  71%|███████   | 32329/45855 [00:00<00:00, 104224.19it/s]processing annotations/val/features.json:  93%|█████████▎| 42756/45855 [00:00<00:00, 94653.54it/s] processing annotations/val/features.json: 100%|██████████| 45855/45855 [00:00<00:00, 100512.26it/s]
+loading test dataset...
+processing annotations/test/features.json:   0%|          | 0/49492 [00:00<?, ?it/s]processing annotations/test/features.json: 100%|██████████| 49492/49492 [00:00<00:00, 658173.06it/s]
+processing annotations/test/features.json:   0%|          | 0/49492 [00:00<?, ?it/s]processing annotations/test/features.json:  27%|██▋       | 13469/49492 [00:00<00:00, 109814.71it/s]processing annotations/test/features.json:  52%|█████▏    | 25563/49492 [00:00<00:00, 115797.02it/s]processing annotations/test/features.json:  75%|███████▌  | 37199/49492 [00:00<00:00, 114640.21it/s]processing annotations/test/features.json:  98%|█████████▊| 48690/49492 [00:00<00:00, 102673.72it/s]processing annotations/test/features.json: 100%|██████████| 49492/49492 [00:00<00:00, 107150.56it/s]
+training LightGBM...
+
+val:
+              precision    recall  f1-score   support
+
+       ROM01       0.62      0.46      0.53      4788
+       ROM02       0.56      0.55      0.55      4806
+       ROM03       0.51      0.74      0.60     10771
+       ROM04       0.58      0.52      0.55      4077
+       ROM05       0.61      0.54      0.57      2538
+       ROM06       0.61      0.51      0.56      3942
+       ROM07       0.62      0.54      0.58      4752
+       ROM08       0.60      0.56      0.58      5157
+       ROM09       0.70      0.55      0.61      5024
+
+    accuracy                           0.58     45855
+   macro avg       0.60      0.55      0.57     45855
+weighted avg       0.59      0.58      0.58     45855
+
+model saved to models/best_lightgb_2.pkl
+
+test:
+              precision    recall  f1-score   support
+
+       ROM01       0.64      0.44      0.52      5134
+       ROM02       0.59      0.57      0.58      5160
+       ROM03       0.49      0.75      0.59     11564
+       ROM04       0.53      0.44      0.48      4379
+       ROM05       0.61      0.54      0.58      2726
+       ROM06       0.63      0.53      0.57      4234
+       ROM07       0.63      0.52      0.57      5104
+       ROM08       0.61      0.51      0.56      5539
+       ROM09       0.72      0.60      0.65      5652
+
+    accuracy                           0.57     49492
+   macro avg       0.60      0.54      0.57     49492
+weighted avg       0.59      0.57      0.57     49492
+

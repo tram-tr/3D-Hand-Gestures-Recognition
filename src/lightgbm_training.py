@@ -1,11 +1,9 @@
 import json
 import numpy as np
-from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import classification_report
-from sklearn.preprocessing import LabelEncoder
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import LabelEncoder, StandardScaler
 from lightgbm import LGBMClassifier
+from sklearn.model_selection import train_test_split
 from tqdm import tqdm
 import os
 import pickle
@@ -33,7 +31,7 @@ def load_data(features_file, labels_file):
 
     for key, features in tqdm(features_data.items(), desc=f"processing {features_file}"):
         if key in labels_data:
-            label = labels_data[key][0]  # using the first part of the label
+            label = labels_data[key][0]
             left_features = features.get('left', {})
             right_features = features.get('right', {})
 
@@ -43,9 +41,7 @@ def load_data(features_file, labels_file):
                 combined_features += hand_features.get('angles', [])
                 combined_features += hand_features.get('mass_center_distances', [])
             
-            # pad combined_features to max_features_length with zeros
             padded_features = combined_features + [0] * (max_features_length - len(combined_features))
-            
             X.append(padded_features)
             y.append(label)
 
@@ -56,52 +52,52 @@ def train(X_train, y_train, X_val, y_val):
     y_train_enc = label_encoder.fit_transform(y_train)
     y_val_enc = label_encoder.transform(y_val)
 
-    pipeline = Pipeline([
-        ('scaler', StandardScaler()),
-        ('clf', LGBMClassifier(random_state=42))
-    ])
-
-    param_grid = {
-        'clf__n_estimators': [50, 100, 200],
-        'clf__learning_rate': [0.01, 0.1, 0.2],
-        'clf__max_depth': [3, 5, 7],
-        'clf__subsample': [0.8, 1.0],
-        'clf__colsample_bytree': [0.8, 1.0]
-    }
-
-    print('hyperparameter tuning...')
-    grid_search = GridSearchCV(
-        pipeline, 
-        param_grid, 
-        scoring='accuracy', 
-        cv=5, 
-        verbose=2, 
-        n_jobs=-1
+    model = LGBMClassifier(
+        random_state=42,
+        class_weight='balanced',
+        max_bin=255,
+        n_estimators=2000,
+        learning_rate=0.01,  
+        max_depth=6,  
+        num_leaves=50,  
+        min_child_samples=20,  
+        min_child_weight=1e-4,  
+        reg_alpha=0.5,  
+        reg_lambda=1.0,  
+        subsample=0.8,
+        colsample_bytree=0.8,
+        verbosity=-1
     )
 
-    grid_search.fit(X_train, y_train_enc)
-    best_model = grid_search.best_estimator_
-    y_val_pred = best_model.predict(X_val)
-    print("val:")
-    print(classification_report(y_val_enc, y_val_pred, target_names=label_encoder.classes_))
-    print(f"best hyperparameters: {grid_search.best_params_}")
+    print("training LightGBM...")
+    model.fit(
+        X_train,
+        y_train_enc,
+        eval_set=[(X_val, y_val_enc)],
+        eval_metric='logloss'
+    )
 
-    model_name = 'best_lightgbm.pkl'
+    y_val_pred = model.predict(X_val)
+    print("\nval:")
+    print(classification_report(y_val_enc, y_val_pred, target_names=label_encoder.classes_))
+
     model_dir = 'models'
     os.makedirs(model_dir, exist_ok=True)
-    save_path = os.path.join(model_dir, model_name)
-    with open(save_path, "wb") as f:
-        pickle.dump((best_model, label_encoder), f)
-    print(f"model saved to {save_path}")
+    model_path = os.path.join(model_dir, 'best_lightgb_2.pkl')
+    with open(model_path, 'wb') as f:
+        pickle.dump((model, label_encoder), f)
+    print(f"model saved to {model_path}")
 
-    return best_model, label_encoder
+    return model, label_encoder
+
+
 
 def evaluate_model(model, X_test, y_test, label_encoder):
     y_test_enc = label_encoder.transform(y_test)
     y_test_pred = model.predict(X_test)
-    print("test:")
+
+    print("\ntest:")
     print(classification_report(y_test_enc, y_test_pred, target_names=label_encoder.classes_))
-    return y_test_pred
 
 if __name__ == '__main__':
     data_dir = 'annotations'
@@ -120,5 +116,4 @@ if __name__ == '__main__':
     X_test, y_test = datasets['test']
 
     clf, label_encoder = train(X_train, y_train, X_val, y_val)
-
-    y_test_pred = evaluate_model(clf, X_test, y_test, label_encoder)
+    evaluate_model(clf, X_test, y_test, label_encoder)

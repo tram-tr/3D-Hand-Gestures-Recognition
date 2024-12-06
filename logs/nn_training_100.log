@@ -1,0 +1,346 @@
+loading train dataset...
+processing drive/MyDrive/annotations/train/features.json: 100%|██████████| 140859/140859 [00:00<00:00, 434620.63it/s]
+processing drive/MyDrive/annotations/train/features.json: 100%|██████████| 140859/140859 [00:02<00:00, 63580.04it/s]
+loading val dataset...
+processing drive/MyDrive/annotations/val/features.json: 100%|██████████| 45855/45855 [00:00<00:00, 401415.51it/s]
+processing drive/MyDrive/annotations/val/features.json: 100%|██████████| 45855/45855 [00:00<00:00, 88839.76it/s]
+loading test dataset...
+processing drive/MyDrive/annotations/test/features.json: 100%|██████████| 49492/49492 [00:00<00:00, 385821.84it/s]
+processing drive/MyDrive/annotations/test/features.json: 100%|██████████| 49492/49492 [00:00<00:00, 91531.43it/s]
+training the neural network...
+epoch 1/100
+train loss: 1.8585 acc: 0.3319
+val loss: 1.7499 acc: 0.3801
+epoch 2/100
+train loss: 1.7681 acc: 0.3718
+val loss: 1.7250 acc: 0.4003
+epoch 3/100
+train loss: 1.7369 acc: 0.3873
+val loss: 1.7028 acc: 0.4089
+epoch 4/100
+train loss: 1.7154 acc: 0.3975
+val loss: 1.6624 acc: 0.4332
+epoch 5/100
+train loss: 1.6990 acc: 0.4036
+val loss: 1.6628 acc: 0.4340
+epoch 6/100
+train loss: 1.6872 acc: 0.4089
+val loss: 1.6391 acc: 0.4397
+epoch 7/100
+train loss: 1.6736 acc: 0.4152
+val loss: 1.6189 acc: 0.4526
+epoch 8/100
+train loss: 1.6622 acc: 0.4204
+val loss: 1.6176 acc: 0.4482
+epoch 9/100
+train loss: 1.6543 acc: 0.4240
+val loss: 1.6049 acc: 0.4466
+epoch 10/100
+train loss: 1.6475 acc: 0.4261
+val loss: 1.5896 acc: 0.4618
+epoch 11/100
+train loss: 1.6416 acc: 0.4306
+val loss: 1.5930 acc: 0.4633
+epoch 12/100
+train loss: 1.6349 acc: 0.4311
+val loss: 1.5987 acc: 0.4476
+epoch 13/100
+train loss: 1.6311 acc: 0.4326
+val loss: 1.5694 acc: 0.4647
+epoch 14/100
+train loss: 1.6283 acc: 0.4353
+val loss: 1.5809 acc: 0.4543
+epoch 15/100
+train loss: 1.6217 acc: 0.4368
+val loss: 1.5595 acc: 0.4696
+epoch 16/100
+train loss: 1.6183 acc: 0.4390
+val loss: 1.5717 acc: 0.4704
+epoch 17/100
+train loss: 1.6148 acc: 0.4400
+val loss: 1.6025 acc: 0.4482
+epoch 18/100
+train loss: 1.6120 acc: 0.4405
+val loss: 1.5658 acc: 0.4677
+epoch 19/100
+train loss: 1.6084 acc: 0.4435
+val loss: 1.5601 acc: 0.4714
+epoch 20/100
+train loss: 1.6057 acc: 0.4435
+val loss: 1.5561 acc: 0.4760
+epoch 21/100
+train loss: 1.6030 acc: 0.4432
+val loss: 1.5453 acc: 0.4755
+epoch 22/100
+train loss: 1.5979 acc: 0.4469
+val loss: 1.5466 acc: 0.4713
+epoch 23/100
+train loss: 1.5936 acc: 0.4478
+val loss: 1.5416 acc: 0.4701
+epoch 24/100
+train loss: 1.5968 acc: 0.4475
+val loss: 1.5473 acc: 0.4681
+epoch 25/100
+train loss: 1.5940 acc: 0.4488
+val loss: 1.5548 acc: 0.4665
+epoch 26/100
+train loss: 1.5923 acc: 0.4477
+val loss: 1.5331 acc: 0.4851
+epoch 27/100
+train loss: 1.5897 acc: 0.4506
+val loss: 1.5368 acc: 0.4779
+epoch 28/100
+train loss: 1.5878 acc: 0.4506
+val loss: 1.5316 acc: 0.4788
+epoch 29/100
+train loss: 1.5877 acc: 0.4506
+val loss: 1.5337 acc: 0.4755
+epoch 30/100
+train loss: 1.5876 acc: 0.4503
+val loss: 1.5376 acc: 0.4754
+epoch 31/100
+train loss: 1.5811 acc: 0.4532
+val loss: 1.5110 acc: 0.4872
+epoch 32/100
+train loss: 1.5837 acc: 0.4523
+val loss: 1.5373 acc: 0.4775
+epoch 33/100
+train loss: 1.5796 acc: 0.4547
+val loss: 1.5152 acc: 0.4912
+epoch 34/100
+train loss: 1.5773 acc: 0.4555
+val loss: 1.5334 acc: 0.4776
+epoch 35/100
+train loss: 1.5743 acc: 0.4560
+val loss: 1.5059 acc: 0.4949
+epoch 36/100
+train loss: 1.5753 acc: 0.4565
+val loss: 1.5175 acc: 0.4855
+epoch 37/100
+train loss: 1.5734 acc: 0.4573
+val loss: 1.5286 acc: 0.4807
+epoch 38/100
+train loss: 1.5708 acc: 0.4577
+val loss: 1.5153 acc: 0.4864
+epoch 39/100
+train loss: 1.5698 acc: 0.4572
+val loss: 1.5082 acc: 0.4953
+epoch 40/100
+train loss: 1.5681 acc: 0.4575
+val loss: 1.5055 acc: 0.4915
+epoch 41/100
+train loss: 1.5701 acc: 0.4589
+val loss: 1.5046 acc: 0.4902
+epoch 42/100
+train loss: 1.5668 acc: 0.4590
+val loss: 1.5136 acc: 0.4927
+epoch 43/100
+train loss: 1.5690 acc: 0.4576
+val loss: 1.5134 acc: 0.4818
+epoch 44/100
+train loss: 1.5707 acc: 0.4580
+val loss: 1.5086 acc: 0.4897
+epoch 45/100
+train loss: 1.5636 acc: 0.4604
+val loss: 1.5048 acc: 0.4919
+epoch 46/100
+train loss: 1.5624 acc: 0.4622
+val loss: 1.5059 acc: 0.4884
+epoch 47/100
+train loss: 1.5615 acc: 0.4608
+val loss: 1.4986 acc: 0.4897
+epoch 48/100
+train loss: 1.5584 acc: 0.4634
+val loss: 1.5134 acc: 0.4819
+epoch 49/100
+train loss: 1.5575 acc: 0.4618
+val loss: 1.5036 acc: 0.4875
+epoch 50/100
+train loss: 1.5590 acc: 0.4632
+val loss: 1.5057 acc: 0.4933
+epoch 51/100
+train loss: 1.5575 acc: 0.4641
+val loss: 1.4983 acc: 0.4939
+epoch 52/100
+train loss: 1.5539 acc: 0.4649
+val loss: 1.5020 acc: 0.4861
+epoch 53/100
+train loss: 1.5558 acc: 0.4646
+val loss: 1.5081 acc: 0.4855
+epoch 54/100
+train loss: 1.5550 acc: 0.4651
+val loss: 1.5001 acc: 0.4926
+epoch 55/100
+train loss: 1.5547 acc: 0.4643
+val loss: 1.5083 acc: 0.4890
+epoch 56/100
+train loss: 1.5531 acc: 0.4643
+val loss: 1.4971 acc: 0.4890
+epoch 57/100
+train loss: 1.5519 acc: 0.4660
+val loss: 1.4968 acc: 0.4983
+epoch 58/100
+train loss: 1.5521 acc: 0.4643
+val loss: 1.4901 acc: 0.4962
+epoch 59/100
+train loss: 1.5489 acc: 0.4670
+val loss: 1.4996 acc: 0.4845
+epoch 60/100
+train loss: 1.5487 acc: 0.4666
+val loss: 1.4956 acc: 0.4836
+epoch 61/100
+train loss: 1.5478 acc: 0.4662
+val loss: 1.4864 acc: 0.4954
+epoch 62/100
+train loss: 1.5480 acc: 0.4672
+val loss: 1.5001 acc: 0.4927
+epoch 63/100
+train loss: 1.5484 acc: 0.4651
+val loss: 1.4902 acc: 0.4979
+epoch 64/100
+train loss: 1.5456 acc: 0.4684
+val loss: 1.4913 acc: 0.4913
+epoch 65/100
+train loss: 1.5453 acc: 0.4701
+val loss: 1.4896 acc: 0.4949
+epoch 66/100
+train loss: 1.5461 acc: 0.4677
+val loss: 1.4859 acc: 0.4970
+epoch 67/100
+train loss: 1.5438 acc: 0.4689
+val loss: 1.4903 acc: 0.4956
+epoch 68/100
+train loss: 1.5421 acc: 0.4689
+val loss: 1.4832 acc: 0.4983
+epoch 69/100
+train loss: 1.5433 acc: 0.4690
+val loss: 1.4802 acc: 0.5014
+epoch 70/100
+train loss: 1.5429 acc: 0.4697
+val loss: 1.4757 acc: 0.5031
+epoch 71/100
+train loss: 1.5415 acc: 0.4700
+val loss: 1.4858 acc: 0.4949
+epoch 72/100
+train loss: 1.5409 acc: 0.4706
+val loss: 1.4915 acc: 0.4939
+epoch 73/100
+train loss: 1.5375 acc: 0.4704
+val loss: 1.4953 acc: 0.4867
+epoch 74/100
+train loss: 1.5375 acc: 0.4704
+val loss: 1.4657 acc: 0.5047
+epoch 75/100
+train loss: 1.5380 acc: 0.4704
+val loss: 1.4816 acc: 0.4967
+epoch 76/100
+train loss: 1.5383 acc: 0.4699
+val loss: 1.4735 acc: 0.4969
+epoch 77/100
+train loss: 1.5401 acc: 0.4692
+val loss: 1.4794 acc: 0.4974
+epoch 78/100
+train loss: 1.5358 acc: 0.4724
+val loss: 1.4821 acc: 0.4968
+epoch 79/100
+train loss: 1.5388 acc: 0.4709
+val loss: 1.4812 acc: 0.4958
+epoch 80/100
+train loss: 1.5362 acc: 0.4716
+val loss: 1.4794 acc: 0.4957
+epoch 81/100
+train loss: 1.5365 acc: 0.4711
+val loss: 1.4833 acc: 0.4967
+epoch 82/100
+train loss: 1.5356 acc: 0.4713
+val loss: 1.4776 acc: 0.4958
+epoch 83/100
+train loss: 1.5328 acc: 0.4729
+val loss: 1.4673 acc: 0.5050
+epoch 84/100
+train loss: 1.5333 acc: 0.4740
+val loss: 1.4710 acc: 0.5071
+epoch 85/100
+train loss: 1.5311 acc: 0.4744
+val loss: 1.4795 acc: 0.4986
+epoch 86/100
+train loss: 1.5338 acc: 0.4724
+val loss: 1.4815 acc: 0.4990
+epoch 87/100
+train loss: 1.5307 acc: 0.4722
+val loss: 1.4928 acc: 0.4893
+epoch 88/100
+train loss: 1.5298 acc: 0.4735
+val loss: 1.4858 acc: 0.4940
+epoch 89/100
+train loss: 1.5296 acc: 0.4738
+val loss: 1.4652 acc: 0.5018
+epoch 90/100
+train loss: 1.5287 acc: 0.4752
+val loss: 1.4580 acc: 0.5079
+epoch 91/100
+train loss: 1.5275 acc: 0.4757
+val loss: 1.4706 acc: 0.5047
+epoch 92/100
+train loss: 1.5309 acc: 0.4751
+val loss: 1.4689 acc: 0.5020
+epoch 93/100
+train loss: 1.5266 acc: 0.4748
+val loss: 1.4679 acc: 0.4967
+epoch 94/100
+train loss: 1.5266 acc: 0.4751
+val loss: 1.4669 acc: 0.5044
+epoch 95/100
+train loss: 1.5273 acc: 0.4754
+val loss: 1.4771 acc: 0.4995
+epoch 96/100
+train loss: 1.5258 acc: 0.4761
+val loss: 1.4602 acc: 0.5058
+epoch 97/100
+train loss: 1.5279 acc: 0.4751
+val loss: 1.4823 acc: 0.4989
+epoch 98/100
+train loss: 1.5256 acc: 0.4777
+val loss: 1.4723 acc: 0.5041
+epoch 99/100
+train loss: 1.5248 acc: 0.4763
+val loss: 1.4674 acc: 0.5016
+epoch 100/100
+train loss: 1.5256 acc: 0.4758
+val loss: 1.4735 acc: 0.5026
+model saved to drive/MyDrive/best_nn_100.pth
+test acc: 0.5005
+
+val:
+              precision    recall  f1-score   support
+
+       ROM01       0.61      0.40      0.48      4788
+       ROM02       0.63      0.33      0.43      4806
+       ROM03       0.44      0.81      0.57     10771
+       ROM04       0.49      0.27      0.35      4077
+       ROM05       0.53      0.40      0.46      2538
+       ROM06       0.45      0.30      0.36      3942
+       ROM07       0.49      0.54      0.51      4752
+       ROM08       0.53      0.52      0.53      5157
+       ROM09       0.74      0.44      0.55      5024
+
+    accuracy                           0.50     45855
+   macro avg       0.55      0.45      0.47     45855
+weighted avg       0.54      0.50      0.49     45855
+
+test:
+              precision    recall  f1-score   support
+
+       ROM01       0.61      0.38      0.47      5134
+       ROM02       0.68      0.36      0.47      5160
+       ROM03       0.42      0.83      0.56     11564
+       ROM04       0.40      0.20      0.27      4379
+       ROM05       0.58      0.42      0.49      2726
+       ROM06       0.46      0.31      0.37      4234
+       ROM07       0.47      0.48      0.47      5104
+       ROM08       0.53      0.47      0.50      5539
+       ROM09       0.79      0.53      0.63      5652
+
+    accuracy                           0.50     49492
+   macro avg       0.55      0.44      0.47     49492
+weighted avg       0.54      0.50      0.49     49492
