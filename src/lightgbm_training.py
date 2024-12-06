@@ -56,17 +56,17 @@ def train(X_train, y_train, X_val, y_val):
         random_state=42,
         class_weight='balanced',
         max_bin=255,
-        n_estimators=2000,
-        learning_rate=0.01,  
-        max_depth=6,  
-        num_leaves=50,  
-        min_child_samples=20,  
-        min_child_weight=1e-4,  
-        reg_alpha=0.5,  
-        reg_lambda=1.0,  
+        n_estimators=1000,
+        learning_rate=0.05,
+        max_depth=5,
+        num_leaves=31,
+        min_child_samples=50,
+        min_child_weight=1e-3,
+        reg_alpha=0.1,
+        reg_lambda=0.1,
         subsample=0.8,
         colsample_bytree=0.8,
-        verbosity=-1
+        verbosity=-1 
     )
 
     print("training LightGBM...")
@@ -83,7 +83,7 @@ def train(X_train, y_train, X_val, y_val):
 
     model_dir = 'models'
     os.makedirs(model_dir, exist_ok=True)
-    model_path = os.path.join(model_dir, 'best_lightgb_2.pkl')
+    model_path = os.path.join(model_dir, 'best_lightgbm.pkl')
     with open(model_path, 'wb') as f:
         pickle.dump((model, label_encoder), f)
     print(f"model saved to {model_path}")
