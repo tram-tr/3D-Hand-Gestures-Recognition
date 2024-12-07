@@ -406,19 +406,19 @@ Motivated by the findings in the research [Why Deep Models Often Cannot Beat Non
 
 (For more details on training and evaluation, refer to the `.log` files in the logs folder)
 
-1. XGBoost:
+**1. XGBoost:**
 - Validation Metrics:
    - Precision: 0.64, Recall: 0.54, F1-Score: 0.57.
 - Test Metrics:
    - Precision: 0.62, Recall: 0.58, F1-Score: 0.58.
  
-2. LightGBM:
+**2. LightGBM:**
 - Validation Metrics:
    - Precision: 0.62, Recall: 0.56, F1-Score: 0.58.
 - Test Metrics:
    - Precision: 0.60, Recall: 0.58, F1-Score: 0.58.
  
-3. PoseNN:
+**3. PoseNN:**
 - Validation Metrics:
    - Precision: 0.56, Recall: 0.48, F1-Score: 0.50.
 - Test Metrics:
@@ -432,14 +432,16 @@ In contrast, PoseNN struggled to achieve comparable performance. I think this mi
 
 **Possible Future Works**
 
-1. Gradient Boosting:
+**1. Gradient Boosting:**
+
 I think the results from XGBoost and LightGBM could be further improved by:
 
 - Generating additional features: This includes deriving new features from the existing ones or introducing domain-specific engineered features to capture more nuanced relationships.
 - Refining feature selection: By selecting only the most relevant features, we could reduce noise and enhance model performance.
 - Testing ensemble methods: Combining XGBoost and LightGBM in an ensemble could capitalize on their strengths and improve prediction accuracy.
 
-2. PoseNN:
+**2. PoseNN:**
+
 Since PoseNN is currently a relatively simple feedforward architecture, I believe there is significant potential for improvement. Some ideas include:
 
 - Adding batch normalization: This could stabilize training and improve the model's ability to generalize by normalizing feature distributions layer by layer.
