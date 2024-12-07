@@ -425,11 +425,13 @@ Motivated by the findings in the research [Why Deep Models Often Cannot Beat Non
    - Precision: 0.56, Recall: 0.52, F1-Score: 0.50.
  
 **Observations**
+
 I think the results clearly show that XGBoost and LightGBM consistently outperformed PoseNN. One reason for this could be the tabular nature of the preprocessed image features, which aligns well with Gradient Boosting models. Both XGBoost and LightGBM are highly effective in handling structured, high-dimensional data like this, where each feature has a well-defined meaning.
 
 In contrast, PoseNN struggled to achieve comparable performance. I think this might be because the dataset lacks the spatial or temporal relationships typically found in images or sequential data. Neural networks like PoseNN are generally optimized for capturing structured dependencies, which are absent in feature vectors extracted from images. Without these dependencies, PoseNN might not fully take advantage of its capabilities, leading to underperformance.
 
 **Possible Future Works**
+
 1. Gradient Boosting:
 I think the results from XGBoost and LightGBM could be further improved by:
 
