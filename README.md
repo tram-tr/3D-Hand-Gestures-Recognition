@@ -430,7 +430,7 @@ I think the results clearly show that XGBoost and LightGBM consistently outperfo
 
 In contrast, PoseNN struggled to achieve comparable performance. I think this might be because the dataset lacks the spatial or temporal relationships typically found in images or sequential data. Neural networks like PoseNN are generally optimized for capturing structured dependencies, which are absent in feature vectors extracted from images. Without these dependencies, PoseNN might not fully take advantage of its capabilities, leading to underperformance.
 
-**Possible Future Works**
+## Possible Future Works
 
 **1. Gradient Boosting:**
 
