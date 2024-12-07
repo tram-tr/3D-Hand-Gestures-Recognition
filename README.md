@@ -371,7 +371,7 @@ From the original dataset, I generated new dataset that captures non-linear rela
 Initally, I consider an SVM with an RBF kernel which is well-suited for non-linear dataset. However, the large dataset size made this option computationally expensive, leading to extremely long training times and scalability challenges.
 
 Motivated by the findings in the research [Why Deep Models Often Cannot Beat Non-deep Counterparts on Molecular Property Prediction?](https://arxiv.org/abs/2306.17702), I decided to explore Gradient Boosting models (XGBoost and LightGBM) along with a simple feedforward neural network (I called it PoseNN). This study pointed out that traditional machine learning models, especially Gradient Boosting, can outperform deep learning models in scenarios where the dataset involves complex tabular data and does not provide spatial or sequential dependencies, such as molecular property prediction. I realized that this project share some simlar aspects:
-- Features and labels in this project were extracted and preprocessed from images into numerical vectors (e.g., distances, angles), resembling the tabular nature of molecular property datasets.
+- Features and labels in this project were extracted and preprocessed from images into numerical vectors (e.g., distances, angles, center-of-mass distances), resembling the tabular nature of molecular property datasets.
 - Gradient Boosting models like XGBoost and LightGBM are well-suited for capturing intricate patterns in tabular data.
 - I also tested a simple feedforward neural network (PoseNN) to evaluate whether a neural approach could learn and generalize effectively for this type of data.
 
