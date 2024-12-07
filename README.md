@@ -1,4 +1,4 @@
-# Project Name: 3D Hand Pose Recognition Using MediaPipe Keypoints
+# 3D Hand Pose Recognition Using MediaPipe Keypoints
 
 ## Part 1: High-Level Solution (Revised) [09/18/24]
 
@@ -293,12 +293,19 @@ Format of the `json` file:
 }
 ```
 
-## Part 4: Classification [12/04/24]
+## Part 4: Classifier Evaluation and Analysis [12/06/24]
 
-### Processed Anotations
+### Extracted Features and Labels
 
 Annotations: [Download](https://drive.google.com/drive/folders/1ithS4YY1HVpQ1FCo7eU-VBgd8OWL9Ury?usp=sharing)
 
+The keypoint data was processed to extract numerical feature vectors and labels. Features included geometric properties like distances, angles, and center-of-mass distances.
+- The longest feature vector determined the dimensionality, and shorter vectors were zero-padded.
+- This preprocessing resulted in large datasets:
+   - Training features: ~1000MB
+   - Validation features: ~300MB
+   - Test features: ~320MB
+  
 ```
 annotations/
 │
@@ -357,3 +364,89 @@ Format of `labels.json`:
 | ROM08 | Left-hand finger occlusions |
 | ROM09 | Interaction fingers touching |
 
+## Why These Classifiers Were Chosen
+
+From the original dataset, I generated new dataset that captures non-linear relationships between features and labels derived from image data. Even after preproccessing, the dataset used in this project is very large; the processed feature files alone reached nearly 1000MB for training and 300MB for validation. 
+
+Initally, I consider an SVM with an RBF kernel which is well-suited for non-linear dataset. However, the large dataset size made this option computationally expensive, leading to extremely long training times and scalability challenges.
+
+Motivated by the findings in the research “Why Deep Models Often Cannot Beat Non-deep Counterparts on Molecular Property Prediction?”, I decided to explore Gradient Boosting models (XGBoost and LightGBM) along with a simple feedforward neural network (I called it PoseNN). This study pointed out that traditional machine learning models, especially Gradient Boosting, can outperform deep learning fmodels in scenarios where the dataset involves complex tabular data and does not provide spatial or sequential dependencies, such as molecular property prediction. I realized that this project share some simlar aspects:
+- Features and labels in this project were extracted and preprocessed from images into numerical vectors (e.g., distances, angles), resembling the tabular nature of molecular property datasets.
+- Gradient Boosting models like XGBoost and LightGBM are well-suited for capturing intricate patterns in tabular data.
+- I also tested a simple feedforward neural network (PoseNN) to evaluate whether a neural approach could learn and generalize effectively for this type of data.
+
+## Classifier Architectures and Training
+
+**XGBoost and LightGBM:**
+- Gradient Boosting models were trained on the preprocessed features and labels.
+- Hyperparemeter Tuning:
+   - XGBoost: Parameters such as `n_estimators`, `learning_rate`, `max_depth`, and regularization terms (`reg_alpha`, `reg_lambda`) were tuned via GridSearchCV.
+   - LightGBM: A similar grid search was conducted with additional hyperparameters, including `num_leaves`, `min_child_samples`, and `colsample_bytree`.
+   - Early stopping monitored validation loss to prevent overtraining.
+ 
+**PoseNN (Feedforward Neural Network):**
+- Input Layer: Processes feature vectors of size matching the dataset’s padded feature length.
+- Hidden Layers:
+   - Layer 1: Fully connected layer with 128 neurons, ReLU activation, and 30% dropout.
+   - Layer 2: Fully connected layer with 64 neurons, ReLU activation, and 30% dropout.
+- Output Layer: Fully connected layer with the number of neurons equal to the number of classes, outputting logits for classification.
+- The neural network was trained using Adam optimizer with a learning rate of 0.001. Dropout layers were included to improve generalization. The model underwent training for 200 epochs.
+
+## Classification Accuracy and Results
+
+**Performance Summary**
+
+| Model | Validation Accuracy | Test Accuracy |
+| -------- | ------- | ------- |
+| XGBoost | 0.59 | 0.58 |
+| LightGBM | 0.59 | 0.58 |
+| PoseNN | 0.52 | 0.52 |
+
+**Detailed Metrics**
+
+(For more details on training and evaluation, refer to the `.log` files in the logs folder)
+
+1. XGBoost:
+- Validation Metrics:
+   - Precision: 0.64, Recall: 0.54, F1-Score: 0.57.
+- Test Metrics:
+   - Precision: 0.62, Recall: 0.58, F1-Score: 0.58.
+ 
+2. LightGBM:
+- Validation Metrics:
+   - Precision: 0.62, Recall: 0.56, F1-Score: 0.58.
+- Test Metrics:
+   - Precision: 0.60, Recall: 0.58, F1-Score: 0.58.
+ 
+3. PoseNN:
+- Validation Metrics:
+   - Precision: 0.56, Recall: 0.48, F1-Score: 0.50.
+- Test Metrics:
+   - Precision: 0.56, Recall: 0.52, F1-Score: 0.50.
+ 
+**Observations**
+I think the results clearly show that XGBoost and LightGBM consistently outperformed PoseNN. One reason for this could be the tabular nature of the preprocessed image features, which aligns well with Gradient Boosting models. Both XGBoost and LightGBM are highly effective in handling structured, high-dimensional data like this, where each feature has a well-defined meaning.
+
+In contrast, PoseNN struggled to achieve comparable performance. I think this might be because the dataset lacks the spatial or temporal relationships typically found in images or sequential data. Neural networks like PoseNN are generally optimized for capturing structured dependencies, which are absent in feature vectors extracted from images. Without these dependencies, PoseNN might not fully take advantage of its capabilities, leading to underperformance.
+
+**Possible Future Works**
+1. Gradient Boosting:
+I think the results from XGBoost and LightGBM could be further improved by:
+
+- Generating additional features: This includes deriving new features from the existing ones or introducing domain-specific engineered features to capture more nuanced relationships.
+- Refining feature selection: By selecting only the most relevant features, we could reduce noise and enhance model performance.
+- Testing ensemble methods: Combining XGBoost and LightGBM in an ensemble could capitalize on their strengths and improve prediction accuracy.
+
+2. PoseNN:
+Since PoseNN is currently a relatively simple feedforward architecture, I believe there is significant potential for improvement. Some ideas include:
+
+- Adding batch normalization: This could stabilize training and improve the model's ability to generalize by normalizing feature distributions layer by layer.
+- Exploring attention mechanisms: Incorporating attention could help the network identify and prioritize the most important features.
+- Augmenting the dataset: Increasing the diversity of the training data could help improve generalization to unseen samples.
+- Using transfer learning: Incorporating pre-trained models could help leverage features learned from similar tasks.
+
+In addition to that, if I had more time, I would focus on enhancing the preprocessing pipeline. For example:
+- Normalizing features: Ensuring all features are scaled and distributed consistently could improve model performance.
+- Balancing the dataset: Addressing any class imbalance could help avoid biased predictions.
+
+Overall, while XGBoost and LightGBM showed stronger results on this dataset, I think further exploration of neural network architectures and improved preprocessing could help bridge the performance gap and potentially reveal more meaningful insights.
