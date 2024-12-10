@@ -17,7 +17,7 @@ def generate_labels(data_dir, output_file):
             elif rom_id == 'ROM04':
                 rom_label = 'Left hand (LT) with occlusion'
             elif rom_id == 'ROM05':
-                rom_label = 'Right wrist'
+                rom_label = 'Right hand (LT) with no occlusions'
             elif rom_id == 'ROM06':
                 rom_label = 'Right hand (RT) with occlusion'
             elif rom_id == 'ROM07':
