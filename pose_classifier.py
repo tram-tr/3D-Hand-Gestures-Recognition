@@ -1,6 +1,6 @@
 import cv2
 import mediapipe as mp
-from feature_extraction import extract_features
+from src.feature_extraction import extract_features
 import pickle
 import numpy as np
 import matplotlib.pyplot as plt
@@ -17,6 +17,15 @@ labels = {
     'ROM08': 'Left-hand finger occlusions',
     'ROM09': 'Interaction fingers touching'
 }
+
+hand_connections = [
+    (0, 1), (1, 2), (2, 3), (3, 4),  # Thumb
+    (0, 5), (5, 6), (6, 7), (7, 8),  # Index finger
+    (0, 9), (9, 10), (10, 11), (11, 12),  # Middle finger
+    (0, 13), (13, 14), (14, 15), (15, 16),  # Ring finger
+    (0, 17), (17, 18), (18, 19), (19, 20)  # Pinky finger
+]
+
 
 class HandPoseClassifier3D:
     def __init__(self, model_path):
@@ -77,16 +86,19 @@ class HandPoseClassifier3D:
                     mp_drawing.draw_landmarks(frame_bgr, hand_landmarks, mp_hands.HAND_CONNECTIONS)
                     keypoints = [(lm.x, lm.y, lm.z) for lm in hand_landmarks.landmark]
                     hand_label = handedness.classification[0].label.lower()  # "left" or "right"
-                    if hand_label == 'left':
-                        hand_label = 'right'
-                    else:
-                        hand_label = 'left'
+                
                     keypoints_dict[hand_label] = keypoints
 
                     # render 3D Keypoints
                     self.render_3d(keypoints)
 
                     # dynamic keypoints to the blank canvas
+                    for kp1, kp2 in hand_connections:
+                        if kp1 < len(keypoints) and kp2 < len(keypoints):  
+                            x1, y1 = int(keypoints[kp1][0] * dynamic_frame.shape[1]), int(keypoints[kp1][1] * dynamic_frame.shape[0])
+                            x2, y2 = int(keypoints[kp2][0] * dynamic_frame.shape[1]), int(keypoints[kp2][1] * dynamic_frame.shape[0])
+                            cv2.line(dynamic_frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+
                     for kp in keypoints:
                         x, y = int(kp[0] * dynamic_frame.shape[1]), int(kp[1] * dynamic_frame.shape[0])
                         cv2.circle(dynamic_frame, (x, y), 5, (0, 255, 0), -1)
