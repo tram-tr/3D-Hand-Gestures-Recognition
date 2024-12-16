@@ -482,4 +482,4 @@ python pose_classifier.py
 ```
 ![Real-Time Demo](demo.png)
 
-![Demo Video[(https://drive.google.com/file/d/1e55wNIlt__Vt8H-l0Prak5Bxpzee4KsX/view?usp=sharing)
+![Demo Video](https://drive.google.com/file/d/1e55wNIlt__Vt8H-l0Prak5Bxpzee4KsX/view?usp=sharing)
