@@ -482,4 +482,24 @@ python pose_classifier.py
 ```
 ![Real-Time Demo](demo.png)
 
-![Demo Video](https://drive.google.com/file/d/1e55wNIlt__Vt8H-l0Prak5Bxpzee4KsX/view?usp=sharing)
+[Demo Video](https://drive.google.com/file/d/1e55wNIlt__Vt8H-l0Prak5Bxpzee4KsX/view?usp=sharing)
+
+The pipeline involves sequential steps:
+- Detecting keypoints using MediaPipe during real-time
+- Extracting features (distances, angles, mass-center distances)
+- Classifying poses using the trained model
+
+This process introduces significant latency, making the real-time classifier slower than evaluating preprocessed features from the test set.
+
+### Conclusion
+
+While performance on the test set was reasonable—**58% accuracy for both XGBoost and LightGBM, and 52% for PoseNN**—the real-time classifier exposed a number of limitations that must be addressed. I believe this discrepancy shows the challenges of going from a controlled, dataset-based evaluation to a real-world, dynamic scenario.
+
+One important factor is the environmental mismatch. The training and testing data were derived from a controlled environment: lighting is uniform, the background is uniform, and hand poses are well-defined. Real-time testing is done on subjects with variable lighting, possibly cluttered or dynamic backgrounds, and unforeseen hand orientations. Under these disparities, MediaPipe's keypoint detection would have likely failed to provide precise keypoint detection, therefore leading to noisy or missing keypoints that give rise to incorrect feature extraction.
+
+Another potential issue is the sequential nature of the pipeline: dynamic poses and rapid movements often result in incomplete keypoint detection or delayed predictions, causing misclassifications or skipped frames. I think the pipeline design worked well for static pose classification but struggles when the hand moves quickly or transitions between poses.
+
+I also think that the process of feature extraction, though effective for structured datasets, might introduce inconsistencies in real time. For example, the distances and angles computed from detected keypoints are pretty sensitive to small inaccuracies in keypoint detection. During real-time conditions, even slight mistakes could propagate through the pipe and result in suboptimal predictions.
+
+Finally, the model itself could be more robust. Although XGBoost and LightGBM outperformed PoseNN, their reliance on fixed and preprocessed features makes them less adaptive to real-time variations. The underperforming PoseNN has potential for improvement with additions such as attention mechanisms, batch normalization, or processing of raw keypoints directly, which may alleviate some of these issues.
+
