@@ -364,7 +364,7 @@ Format of `labels.json`:
 | ROM08 | Left-hand finger occlusions |
 | ROM09 | Interaction fingers touching |
 
-## Why These Classifiers Were Chosen
+### Why These Classifiers Were Chosen
 
 From the original dataset, I generated new dataset that captures non-linear relationships between features and labels derived from image data. Even after preproccessing, the dataset used in this project is very large; the processed feature files alone reached nearly 1000MB for training and 300MB for validation. 
 
@@ -375,7 +375,7 @@ Motivated by the findings in the research [Why Deep Models Often Cannot Beat Non
 - Gradient Boosting models like XGBoost and LightGBM are well-suited for capturing intricate patterns in tabular data.
 - I also tested a simple feedforward neural network (PoseNN) to evaluate whether a neural approach could learn and generalize effectively for this type of data.
 
-## Classifier Architectures and Training
+### Classifier Architectures and Training
 
 **XGBoost and LightGBM:**
 - Gradient Boosting models were trained on the preprocessed features and labels.
@@ -392,7 +392,7 @@ Motivated by the findings in the research [Why Deep Models Often Cannot Beat Non
 - Output Layer: Fully connected layer with the number of neurons equal to the number of classes, outputting logits for classification.
 - The neural network was trained using Adam optimizer with a learning rate of 0.001. Dropout layers were included to improve generalization. The model underwent training for 200 epochs.
 
-## Classification Accuracy and Results
+### Classification Accuracy and Results
 
 **Performance Summary**
 
@@ -430,7 +430,7 @@ I think the results clearly show that XGBoost and LightGBM consistently outperfo
 
 In contrast, PoseNN struggled to achieve comparable performance. I think this might be because the dataset lacks the spatial or temporal relationships typically found in images or sequential data. Neural networks like PoseNN are generally optimized for capturing structured dependencies, which are absent in feature vectors extracted from images. Without these dependencies, PoseNN might not fully take advantage of its capabilities, leading to underperformance.
 
-## Possible Future Works
+### Possible Future Works
 
 **1. Gradient Boosting:**
 
@@ -454,3 +454,29 @@ In addition to that, if I had more time, I would focus on enhancing the preproce
 - Balancing the dataset: Addressing any class imbalance could help avoid biased predictions.
 
 Overall, while XGBoost and LightGBM showed stronger results on this dataset, I think further exploration of neural network architectures and improved preprocessing could help bridge the performance gap and potentially reveal more meaningful insights.
+
+## Part 5: Final Evaluation and Real-Time Performance [12/15/24]
+
+### Test Set Results
+
+The test set used in this project is a subset of the InterHand2.6M dataset, comprising ~320MB of features and labels extracted from the original dataset. This subset represents 20% of the total data and includes completely unseen samples.
+
+The test set contains poses and scenarios that might not present in the training and validation subsets. 
+
+The results on the test set, details in **Part 4**, are summarized below:
+
+| Model | Validation Accuracy | Test Accuracy |
+| -------- | ------- | ------- |
+| XGBoost | 0.59 | 0.58 |
+| LightGBM | 0.59 | 0.58 |
+| PoseNN | 0.52 | 0.52 |
+
+The test set performance is slightly worse than on the training and validation sets. This means that the model does suffer from the difficulty of generalizing to unseen data.
+
+### Real-Time Performance
+
+I implemented a real-time classifier that integrates keypoint detection, feature extraction, and pose classification. 
+
+```
+python pose_classifier.py
+```
